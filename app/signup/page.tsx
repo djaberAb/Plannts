@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 import { useState } from "react";
-import { query } from "@/lib/db"
+import { query } from "@/utils/db"
 import { useRouter } from "next/navigation"
 
 export default function Signup() {
