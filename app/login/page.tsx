@@ -22,9 +22,10 @@ export default function Login() {
   const Router = useRouter();
 
   async function handleLogin(): Promise<void> {
-    await query("SELECT * FROM users WHERE email = ? AND password = ?", [email, password])
+    await query("SELECT * FROM users WHERE (email = ? OR username = ?) AND password = ?", [email, email, password])
     if (!query) {
       console.log("User not found")
+      return
     }
     console.log("User found")
     Router.push("/")
