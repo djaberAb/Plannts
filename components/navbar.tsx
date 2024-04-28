@@ -15,23 +15,23 @@ const Navbar = () => {
         return pathName === href ? 'text-green-600 font-semibold' : '';
     };
 
-    const handleSearch = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Perform search logic here
-        console.log('Search query:', searchQuery);
-        setSearchQuery('');
-    };
+    // const handleSearch = (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     // Perform search logic here
+    //     console.log('Search query:', searchQuery);
+    //     setSearchQuery('');
+    // };
 
     return (
-        <nav className="shadow-sm fixed w-full z-10">
+        <nav className="shadow-sm fixed w-full z-10 bg-white">
             <div className="w-full">
                 <div className="flex items-center h-20 w-full">
                     <div className="flex items-center mx-20 justify-between w-full">
-                        <div className="flex justify-center items-center flex-shink-0">
+                        <Link className="flex justify-center items-center flex-shink-0" href={"/home"}>
                             <h1 className="font-bold text-xl cursor-pointer">
                                 Plan<span className="text-green-600">nt</span>
                             </h1>
-                        </div>
+                        </Link>
                         <div className="hidden md:block">
                             <div className="ml-10 flex items-baseline space-x-4">
                                 <Link
