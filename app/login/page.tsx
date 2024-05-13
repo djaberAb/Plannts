@@ -9,9 +9,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 import { useState } from "react"
-import { query } from "@/utils/db"
 import { useRouter } from "next/navigation"
 
+import { query } from "@/utils/db"
 
 
 export default function Login() {
@@ -28,7 +28,7 @@ export default function Login() {
       return
     }
     console.log("User found")
-    Router.push("/")
+    Router.push("/home")
     
   }
 
@@ -85,7 +85,7 @@ export default function Login() {
           </div>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}
-            <Link href="./signup" className="underline">
+            <Link href="./signup" className="underline hover:font-bold">
               Sign up
             </Link>
           </div>

@@ -1,6 +1,7 @@
 "use server"
 
 import mysql from 'mysql2/promise';
+import { Plant } from './interfaces';
 
 // Create a connection pool
 const pool = mysql.createPool({
@@ -27,4 +28,9 @@ export async function query(query: string, data: any[]) {
         console.error(error);
         return null;
     }
+}
+
+export async function fetchPlants(): Promise<Plant[]> {
+    const plants = await query('SELECT * FROM plants', []);
+    return plants as Plant[];
 }

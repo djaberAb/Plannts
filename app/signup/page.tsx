@@ -132,7 +132,7 @@ export default function Signup() {
         </form>
         <div className="mt-4 text-center text-sm">
           Already have an account?{" "}
-          <Link href="./login" className="underline">
+          <Link href="./login" className="underline hover:font-bold">
             Sign in
           </Link>
         </div>
@@ -151,6 +151,6 @@ export default function Signup() {
       alert("query failed");
       return;
     }
-    Router.push("/");
+    Router.push("/home");
   }
 }
