@@ -1,52 +1,59 @@
 "use client"
+
 import Navbar from '@/components/navbar';
 import PlantCard from '@/components/plant_card';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { fetchPlants } from "@/utils/db"
+import { fetchPlants } from '@/utils/db'; // Replace with your API call
 import { Plant } from '@/utils/interfaces';
 
+
+
 export default function Marketplace() {
-    const [plants, setPlants] = useState<Plant[]>([]);
-    const [filter, setFilter] = useState('');
+  const [plants, setPlants] = useState<Plant[]>([]); // Actual data from API
+  const [filter, setFilter] = useState('');
 
-    useEffect(() => {
-        async function fetchData() {
-            const plantsData = await fetchPlants();
-            setPlants(plantsData);
-        }
-        fetchData();
-    }, []);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const plantsData = await fetchPlants(); // Replace with your API call
+        setPlants(plantsData);
+      } catch (error) {
+        console.error('Error fetching plant data:', error);
+      }
+    }
+    fetchData();
+  }, []);
 
-    const filteredPlants = plants.filter((plant: Plant) => {
-        if (filter === '') {
-            return true;
-        }
-        return plant.category === filter;
-    });
+  const filteredPlants = plants?.filter((plant: Plant) => {
+    if (filter === '') {
+      return true;
+    }
+    return plant.category === filter;
+  });
 
-    const handleFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setFilter(event.target.value);
-    };
+  const handleFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilter(event.target.value);
+  };
 
-    return (
-        <div>
-            <Navbar />
-            <div className='pt-24 px-3'>
-                <div className="flex items-center justify-between mb-8">
-                    <select
-                        className="px-4 py-2 border border-gray-300 rounded-md"
-                        value={filter}
-                        onChange={handleFilter}
-                    >
-                        <option value="">Tous</option>
-                        <option value="intérieur">Intérieur</option>
-                        <option value="extérieur">Extérieur</option>
-                        <option value="succulent">Succulent</option>
-                    </select>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8">
-                    {filteredPlants.map((plant: Plant) => (
+return (
+    <div>
+        <Navbar />
+        <div className='pt-24 px-3'>
+            <div className='flex items-center justify-between mb-8'>
+                <select
+                    className='px-4 py-2 border border-gray-300 rounded-md'
+                    value={filter}
+                    onChange={handleFilter}
+                >
+                    <option value=''>Tous</option>
+                    <option value='intérieur'>Intérieur</option>
+                    <option value='extérieur'>Extérieur</option>
+                    <option value='succulent'>Succulent</option>
+                </select>
+            </div>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'>
+                {filteredPlants.map((plant: Plant) => (
                         <Link href={`/marketplace/${plant.id}`} key={plant.id}>
                             <PlantCard
                                 key={plant.id}
@@ -54,16 +61,17 @@ export default function Marketplace() {
                                 name={plant.name}
                                 description={plant.description || ''}
                                 price={plant.price}
-                                category = {plant.category}
-                                owner= {plant.owner_id}
-                                rating = {plant.rating}
-                                species ={plant.species}
-                                stock = {plant.stock}
+                                category={plant.category}
+                                owner={plant.owner_id}
+                                rating={plant.rating}
+                                species={plant.species}
+                                stock={plant.stock}
                             />
                         </Link>
-                    ))}
-                </div>
+                    ))
+                    }
             </div>
         </div>
-    );
+    </div>
+);
 }

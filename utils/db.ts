@@ -32,5 +32,24 @@ export async function query(query: string, data: any[]) {
 
 export async function fetchPlants(): Promise<Plant[]> {
     const plants = await query('SELECT * FROM plants', []);
+    if (!plants) {
+        return mockPlants;
+    }
     return plants as Plant[];
 }
+
+const mockPlants: Plant[] = [
+    {
+        id: 1,
+        plant_id: 1, // Add the missing plant_id property
+        name: 'Plante serpent',
+        description: 'A beautiful indoor plant',
+        price: 19.99,
+        category: 'intérieur',
+        owner_id: 4,
+        rating: 4.5,
+        species: 'Ficus elastica',
+        stock: 10,
+        image_url: '/plants/snake_Plant.jpg',
+    },
+];
