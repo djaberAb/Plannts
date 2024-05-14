@@ -31,9 +31,9 @@ export default function Signup() {
   return (
     <Card className="mx-auto max-w-sm my-5">
       <CardHeader>
-        <CardTitle className="text-xl">Sign Up</CardTitle>
+        <CardTitle className="text-xl">S'inscrire</CardTitle>
         <CardDescription>
-          Enter your information to create an account
+          Entrez vos informations pour créer un compte
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -41,7 +41,7 @@ export default function Signup() {
           <div className="grid gap-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="first-name">First name</Label>
+                <Label htmlFor="first-name">Prénom</Label>
                 <Input
                   id="first-name"
                   placeholder="Rania"
@@ -51,7 +51,7 @@ export default function Signup() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="last-name">Last name</Label>
+                <Label htmlFor="last-name">Nom de famille</Label>
                 <Input
                   id="last-name"
                   placeholder="Rezig"
@@ -64,7 +64,7 @@ export default function Signup() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="username">Nom d'utilisateur</Label>
                 <Input
                   id="username"
                   placeholder="rania"
@@ -74,7 +74,7 @@ export default function Signup() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="phone">Phone</Label>
+                <Label htmlFor="phone">Téléphone</Label>
                 <Input
                   id="phone"
                   type="tel"
@@ -87,7 +87,7 @@ export default function Signup() {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="address">Address</Label>
+              <Label htmlFor="address">Adresse</Label>
               <Input
                 id="address"
                 type="text"
@@ -110,7 +110,7 @@ export default function Signup() {
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Mot de passe</Label>
               <Input
                 id="password"
                 type="password"
@@ -126,14 +126,14 @@ export default function Signup() {
               type="submit"
               className="w-full bg-green-500 hover:bg-green-700"
             >
-              Create an account
+              Créer un compte
             </Button>
           </div>
         </form>
         <div className="mt-4 text-center text-sm">
-          Already have an account?{" "}
+          Vous avez déjà un compte ?{" "}
           <Link href="./login" className="underline hover:font-bold">
-            Sign in
+            Connectez-vous
           </Link>
         </div>
       </CardContent>
@@ -148,7 +148,7 @@ export default function Signup() {
     await query("INSERT INTO users(`username`, `email`, `password`, `firstname`, `lastname`, `address`, `phone`) VALUES (?, ?, ?, ?, ?, ?, ?)", [username, email, password, firstName, lastName, address, phone]);
  
     if(!query) {
-      alert("query failed");
+      alert("Échec de la requête");
       return;
     }
     Router.push("/home");

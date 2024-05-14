@@ -15,19 +15,12 @@ const Navbar = () => {
         return pathName === href ? 'text-green-600 font-semibold' : '';
     };
 
-    // const handleSearch = (e: React.FormEvent) => {
-    //     e.preventDefault();
-    //     // Perform search logic here
-    //     console.log('Search query:', searchQuery);
-    //     setSearchQuery('');
-    // };
-
     return (
         <nav className="shadow-sm fixed w-full z-10 bg-white">
             <div className="w-full">
                 <div className="flex items-center h-20 w-full">
                     <div className="flex items-center mx-20 justify-between w-full">
-                        <Link className="flex justify-center items-center flex-shink-0" href={"/home"}>
+                        <Link className="flex justify-center items-center flex-shink-0" href={"/"}>
                             <h1 className="font-bold text-xl cursor-pointer">
                                 Plan<span className="text-green-600">nt</span>
                             </h1>
@@ -36,11 +29,11 @@ const Navbar = () => {
                             <div className="ml-10 flex items-baseline space-x-4">
                                 <Link
                                     className={`cursor-pointer hover:bg-green-600 text-black hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive(
-                                        '/home'
+                                        '/'
                                     )}`}
-                                    href={'/home'}
+                                    href={'/'}
                                 >
-                                    Home
+                                    Accueil
                                 </Link>
 
                                 <Link
@@ -49,7 +42,7 @@ const Navbar = () => {
                                     )}`}
                                     href={'/about'}
                                 >
-                                    About
+                                    À propos
                                 </Link>
 
                                 <Link
@@ -58,7 +51,7 @@ const Navbar = () => {
                                     )}`}
                                     href={'/marketplace'}
                                 >
-                                    Marketplace
+                                    Marché
                                 </Link>
 
                                 {/* <Link
@@ -89,7 +82,7 @@ const Navbar = () => {
                             aria-controls="mobile-menu"
                             aria-expanded="false"
                         >
-                            <span className="sr-only">Open main menu</span>
+                            <span className="sr-only">Ouvrir le menu principal</span>
                             {!isOpen ? (
                                 <FiMenu className="block h-6 w-6" area-hidden="true" />
                             ) : (
@@ -115,11 +108,11 @@ const Navbar = () => {
                             >
                                 <Link
                                     className={`cursor-pointer hover:bg-green-600 text-black hover:text-white block px-3 py-2 rounded-md text-base font-medium ${isActive(
-                                        '/home'
+                                        '/'
                                     )}`}
-                                    href={'/home'}
+                                    href={'/'}
                                 >
-                                    Home
+                                    Accueil
                                 </Link>
 
                                 <Link
@@ -128,7 +121,7 @@ const Navbar = () => {
                                         '/about'
                                     )}`}
                                 >
-                                    About
+                                    À propos
                                 </Link>
 
                                 <Link
@@ -137,7 +130,7 @@ const Navbar = () => {
                                         '/marketplace'
                                     )}`}
                                 >
-                                    Marketplace
+                                    Marché
                                 </Link>
 
                                 {/* <Link

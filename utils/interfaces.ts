@@ -8,6 +8,6 @@ export interface Plant {
     rating: number;
     species: string;
     stock: number;
-    category: 'indoor' | 'outdoor' | 'succulent';
+    category: 'intérieur' | 'extérieur' | 'succulent';
     owner_id: number;
 }

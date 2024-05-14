@@ -39,9 +39,9 @@ export default function Marketplace() {
                         value={filter}
                         onChange={handleFilter}
                     >
-                        <option value="">All</option>
-                        <option value="indoor">Indoor</option>
-                        <option value="outdoor">Outdoor</option>
+                        <option value="">Tous</option>
+                        <option value="intérieur">Intérieur</option>
+                        <option value="extérieur">Extérieur</option>
                         <option value="succulent">Succulent</option>
                     </select>
                 </div>
@@ -54,6 +54,11 @@ export default function Marketplace() {
                                 name={plant.name}
                                 description={plant.description || ''}
                                 price={plant.price}
+                                category = {plant.category}
+                                owner= {plant.owner_id}
+                                rating = {plant.rating}
+                                species ={plant.species}
+                                stock = {plant.stock}
                             />
                         </Link>
                     ))}
