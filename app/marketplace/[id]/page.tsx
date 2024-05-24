@@ -1,52 +1,56 @@
-import * as React from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
+"use client"
 
-interface PlantCardProps {
-    image: string;
-    name: string;
-    description: string;
-    price: number;
-    category: string; 
-    owner: string; 
-    rating: number; 
-    species: string;
-    stock: number; 
-}
+import { useSearchParams } from 'next/navigation';
+import React from 'react';
+import Navbar from '@/components/navbar';
+import Image from 'next/image';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 
-const PlantCard: React.FC<PlantCardProps> = ({
-    image,
-    name,
-    description,
-    price,
-    category,
-    owner,
-    rating,
-    species,
-    stock,
-}) => {
-    return (
-        <Card className="w-64">
-            <CardHeader className="p-0">
-                <Image src={image} width={500} height={400} alt={name} className="w-full max-h-64 min-h-64 rounded-md" />
-            </CardHeader>
-            <CardContent className="p-2">
-                <CardTitle className="text-xl">{name}</CardTitle>
-                <CardDescription className="text-sm text">{description}</CardDescription>
-                <p className="text-sm text-gray-500">{category}</p>
-                <p className="text-sm text-gray-500">Owner: {owner}</p>
-                <p className="text-sm text-gray-500">Rating: {rating}</p>
-                <p className="text-sm text-gray-500">Species: {species}</p>
-                <p className="text-sm text-gray-500">Stock: {stock}</p>
-            </CardContent>
-            <CardFooter className="mt-2 p-2">
-                <p className="text-lg font-semibold">${price}</p>
-                <button className="ml-auto bg-green-500 text-white px-4 py-2 rounded">
-                    Add to Cart
-                </button>
-            </CardFooter>
-        </Card>
-    );
+const PlantDetail = () => {
+  const searchParams = useSearchParams();
+
+  const plant_id = searchParams.get('plant_id');
+  const name = searchParams.get('name');
+  const description = searchParams.get('description');
+  const price = searchParams.get('price');
+  const category = searchParams.get('category');
+  const owner_id = searchParams.get('owner_id');
+  const rating = searchParams.get('rating');
+  const species = searchParams.get('species');
+  const stock = searchParams.get('stock');
+  const image_url = searchParams.get('image_url');
+
+  // Ensure you handle cases where the query parameters might not be immediately available
+  if (!plant_id) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <Navbar />
+      <div className='pt-24 px-3 flex p-40'>
+        <div className='w-1/2'>
+          <Image src={image_url as string} alt={name as string} style={{objectFit: "cover"}} width={600} height={400} className='mt-4 '/>
+        </div>
+        <div className='w-1/2 pt-8'>
+          <h1 className='text-4xl font-bold'>{name}</h1>
+          <Label className='mt-4 text-lg'>{description}</Label>
+          <div className='mt-2 grid gap-10'>
+            <div className='grid gap-2'>
+              <Label className='text-lg font'>Price: {price}</Label>
+              <Label className='text-lg'>Category: {category}</Label>
+              <Label className='text-lg'>Owner: {owner_id}</Label>
+              <Label className='text-lg'>Rating: {rating}</Label>
+              <Label className='text-lg'>Species: {species}</Label>
+              <Label className='text-lg'>Stock: {stock}</Label>
+            </div>
+          <Button>Ajouter aux Cart</Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default PlantCard;
+export default PlantDetail;

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Navbar from '@/components/navbar';
 import PlantCard from '@/components/plant_card';
@@ -6,8 +6,6 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { fetchPlants } from '@/utils/db'; // Replace with your API call
 import { Plant } from '@/utils/interfaces';
-
-
 
 export default function Marketplace() {
   const [plants, setPlants] = useState<Plant[]>([]); // Actual data from API
@@ -36,42 +34,59 @@ export default function Marketplace() {
     setFilter(event.target.value);
   };
 
-return (
+  return (
     <div>
-        <Navbar />
-        <div className='pt-24 px-3'>
-            <div className='flex items-center justify-between mb-8'>
-                <select
-                    className='px-4 py-2 border border-gray-300 rounded-md'
-                    value={filter}
-                    onChange={handleFilter}
-                >
-                    <option value=''>Tous</option>
-                    <option value='intérieur'>Intérieur</option>
-                    <option value='extérieur'>Extérieur</option>
-                    <option value='succulent'>Succulent</option>
-                </select>
-            </div>
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'>
-                {filteredPlants.map((plant: Plant) => (
-                        <Link href={`/marketplace/${plant.id}`} key={plant.id}>
-                            <PlantCard
-                                key={plant.id}
-                                image={plant.image_url}
-                                name={plant.name}
-                                description={plant.description || ''}
-                                price={plant.price}
-                                category={plant.category}
-                                owner={plant.owner_id}
-                                rating={plant.rating}
-                                species={plant.species}
-                                stock={plant.stock}
-                            />
-                        </Link>
-                    ))
-                    }
-            </div>
+      <Navbar />
+      <div className='pt-24 px-3'>
+        <div className='flex items-center justify-between mb-8'>
+          <select
+            className='px-4 py-2 border border-gray-300 rounded-md'
+            value={filter}
+            onChange={handleFilter}
+          >
+            <option value=''>Tous</option>
+            <option value='intérieur'>Intérieur</option>
+            <option value='extérieur'>Extérieur</option>
+            <option value='succulent'>Succulent</option>
+          </select>
         </div>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'>
+          {filteredPlants.map((plant: Plant) => (
+            <Link
+              href={{
+                pathname: `/marketplace/${plant.plant_id}`,
+                query: {
+                  plant_id: plant.plant_id,
+                  name: plant.name,
+                  description: plant.description || '',
+                  price: plant.price,
+                  category: plant.category,
+                  owner_id: plant.owner_id,
+                  rating: plant.rating,
+                  species: plant.species,
+                  stock: plant.stock,
+                  image_url: plant.image_url,
+                },
+              }}
+              key={plant.plant_id}
+            >
+              <PlantCard
+                key={plant.plant_id}
+                image_url={plant.image_url}
+                name={plant.name}
+                description={plant.description || ''}
+                price={plant.price}
+                category={plant.category}
+                owner_id={plant.owner_id}
+                rating={plant.rating}
+                species={plant.species}
+                stock={plant.stock}
+                plant_id={plant.plant_id}
+              />
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
-);
+  );
 }

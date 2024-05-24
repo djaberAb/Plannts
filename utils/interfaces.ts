@@ -1,5 +1,4 @@
 export interface Plant {
-    id: any;
     plant_id: number;
     name: string;
     description?: string;
