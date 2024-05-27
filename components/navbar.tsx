@@ -1,18 +1,23 @@
-"use client"
-
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Transition } from '@headlessui/react';
-import { FiMenu, FiX, FiSearch } from 'react-icons/fi'; // Import FiSearch icon
+import { FiMenu, FiX, FiShoppingCart } from 'react-icons/fi'; // Import FiShoppingCart icon
 import { usePathname } from 'next/navigation';
+import Cart from '@/components/cart'; // Import the Cart component
+import { useCart } from '@/utils/cart_context';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [searchQuery, setSearchQuery] = useState(''); // Add searchQuery state
+    const { isCartOpen, toggleCart } = useCart(); // Destructure isCartOpen and toggleCart from useCart()
+
     const pathName = usePathname();
 
     const isActive = (href: string) => {
         return pathName === href ? 'text-green-600 font-semibold' : '';
+    };
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
     };
 
     return (
@@ -54,15 +59,6 @@ const Navbar = () => {
                                     Marché
                                 </Link>
 
-                                {/* <Link
-                                    className={`cursor-pointer hover:bg-green-600 text-black hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive(
-                                        '/services'
-                                    )}`}
-                                    href={'/services'}
-                                >
-                                    Services
-                                </Link> */}
-
                                 <Link
                                     className={`cursor-pointer hover:bg-green-600 text-black hover:text-white px-3 py-2 rounded-md text-sm font-medium ${isActive(
                                         '/contact'
@@ -73,10 +69,17 @@ const Navbar = () => {
                                 </Link>
                             </div>
                         </div>
+                        {/* Cart icon */}
+                        <button
+                            onClick={toggleCart} // Add toggleCart function to onClick event
+                            className="hidden md:inline-flex bg-transparent focus:outline-none"
+                        >
+                            <FiShoppingCart className="h-6 w-6 text-gray-600 hover:text-green-600" />
+                        </button>
                     </div>
                     <div className="mr-10 flex md:hidden">
                         <button
-                            onClick={() => setIsOpen(!isOpen)}
+                            onClick={toggleMenu}
                             className="bg-green-600 inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-green-600 focus:outline-none focus:ring-offset-2 focus:ring-offset-blue-800 focus:ring-white"
                             type="button"
                             aria-controls="mobile-menu"
@@ -133,15 +136,6 @@ const Navbar = () => {
                                     Marché
                                 </Link>
 
-                                {/* <Link
-                                    href={'/services'}
-                                    className={`cursor-pointer hover:bg-green-600 text-black hover:text-white block px-3 py-2 rounded-md text-base font-medium ${isActive(
-                                        '/services'
-                                    )}`}
-                                >
-                                    Services
-                                </Link> */}
-
                                 <Link
                                     href={'/contact'}
                                     className={`cursor-pointer hover:bg-green-600 text-black hover:text-white block px-3 py-2 rounded-md text-base font-medium ${isActive(
@@ -154,8 +148,26 @@ const Navbar = () => {
                         </div>
                     )}
                 </Transition>
+                <Transition
+                    show={isCartOpen} // Use isCartOpen instead of isOpen
+                    enter="transition ease-out duration-300 transform"
+                    enterFrom="translate-x-full"
+                    enterTo="translate-x-0"
+                    leave="transition ease-in duration-300 transform"
+                    leaveFrom="translate-x-0"
+                    leaveTo="translate-x-full"
+                >
+                    {(ref) => (
+                        <div
+                            ref={ref}
+                            className="fixed top-0 right-0 h-full bg-white w-64 shadow-lg z-50 p-4 overflow-y-auto"
+                        >
+                            <Cart />
+                        </div>
+                    )}
+                </Transition>
             </div>
-        </nav>      
+        </nav>
     );
 };
 

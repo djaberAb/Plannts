@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { fetchPlants } from '@/utils/db'; // Replace with your API call
 import { Plant } from '@/utils/interfaces';
+import { CartProvider } from '@/utils/cart_context';
 
 export default function Marketplace() {
   const [plants, setPlants] = useState<Plant[]>([]); // Actual data from API
@@ -52,24 +53,7 @@ export default function Marketplace() {
         </div>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'>
           {filteredPlants.map((plant: Plant) => (
-            <Link
-              href={{
-                pathname: `/marketplace/${plant.plant_id}`,
-                query: {
-                  plant_id: plant.plant_id,
-                  name: plant.name,
-                  description: plant.description || '',
-                  price: plant.price,
-                  category: plant.category,
-                  owner_id: plant.owner_id,
-                  rating: plant.rating,
-                  species: plant.species,
-                  stock: plant.stock,
-                  image_url: plant.image_url,
-                },
-              }}
-              key={plant.plant_id}
-            >
+            <CartProvider>
               <PlantCard
                 key={plant.plant_id}
                 image_url={plant.image_url}
@@ -82,8 +66,8 @@ export default function Marketplace() {
                 species={plant.species}
                 stock={plant.stock}
                 plant_id={plant.plant_id}
-              />
-            </Link>
+                />
+          </CartProvider>
           ))}
         </div>
       </div>
