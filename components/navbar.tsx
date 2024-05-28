@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Transition } from '@headlessui/react';
@@ -5,6 +7,7 @@ import { FiMenu, FiX, FiShoppingCart } from 'react-icons/fi'; // Import FiShoppi
 import { usePathname } from 'next/navigation';
 import Cart from '@/components/cart'; // Import the Cart component
 import { useCart } from '@/utils/cart_context';
+import { Button } from './ui/button';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +24,7 @@ const Navbar = () => {
     };
 
     return (
+        
         <nav className="shadow-sm fixed w-full z-10 bg-white">
             <div className="w-full">
                 <div className="flex items-center h-20 w-full">
@@ -70,15 +74,20 @@ const Navbar = () => {
                             </div>
                         </div>
                         {/* Cart icon */}
-                        <button
-                            onClick={toggleCart} // Add toggleCart function to onClick event
-                            className="hidden md:inline-flex bg-transparent focus:outline-none"
+
+                        <div
+                        className="hidden md:block"
                         >
-                            <FiShoppingCart className="h-6 w-6 text-gray-600 hover:text-green-600" />
-                        </button>
+                        <Button
+                            onClick={toggleCart} // Add toggleCart function to onClick event
+                            className=" md:inline-flex bg-transparent hover:bg-transparent text-black hover:text-white flex justify-start px-3 py-0 rounded-md text-base font-medium"
+                        >
+                            <FiShoppingCart className="h-6 w-6 text-gray-600 hover:text-green-600 " />
+                        </Button>
+                        </div>
                     </div>
                     <div className="mr-10 flex md:hidden">
-                        <button
+                        <Button
                             onClick={toggleMenu}
                             className="bg-green-600 inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-green-600 focus:outline-none focus:ring-offset-2 focus:ring-offset-blue-800 focus:ring-white"
                             type="button"
@@ -91,7 +100,7 @@ const Navbar = () => {
                             ) : (
                                 <FiX className="block h-6 w-6" area-hidden="true" />
                             )}
-                        </button>
+                        </Button>
                     </div>
                 </div>
                 <Transition
@@ -144,12 +153,19 @@ const Navbar = () => {
                                 >
                                     Contact
                                 </Link>
+                                <Button
+                                    onClick={toggleCart}
+                                    className={`w-[373px] cursor-pointer hover:bg-green-600 text-black bg-transparent hover:text-white flex justify-start px-3 py-0 rounded-md text-base font-medium`}
+                                    
+                                >
+                                    Cart
+                                </Button>
                             </div>
                         </div>
                     )}
                 </Transition>
                 <Transition
-                    show={isCartOpen} // Use isCartOpen instead of isOpen
+                    show={isCartOpen}
                     enter="transition ease-out duration-300 transform"
                     enterFrom="translate-x-full"
                     enterTo="translate-x-0"
@@ -160,7 +176,7 @@ const Navbar = () => {
                     {(ref) => (
                         <div
                             ref={ref}
-                            className="fixed top-0 right-0 h-full bg-white w-64 shadow-lg z-50 p-4 overflow-y-auto"
+                            className="fixed top-0 right-0 h-screen bg-white w-screen shadow-lg z-50 p-4 overflow-y-auto"
                         >
                             <Cart />
                         </div>

@@ -53,9 +53,8 @@ export default function Marketplace() {
         </div>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'>
           {filteredPlants.map((plant: Plant) => (
-            <CartProvider>
+            <CartProvider key={plant.plant_id}>
               <PlantCard
-                key={plant.plant_id}
                 image_url={plant.image_url}
                 name={plant.name}
                 description={plant.description || ''}
@@ -66,8 +65,8 @@ export default function Marketplace() {
                 species={plant.species}
                 stock={plant.stock}
                 plant_id={plant.plant_id}
-                />
-          </CartProvider>
+              />
+            </CartProvider>
           ))}
         </div>
       </div>

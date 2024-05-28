@@ -13,7 +13,41 @@ const Cart: React.FC = () => {
   }
 
   return (
-    <div className="fixed top-0 right-0 w-1/3 h-full bg-white shadow-lg p-4 z-50">
+      <div className="fixed top-0 right-0 w-full h-full bg-white shadow-lg p-4 z-50">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-bold">Panier</h2>
+          <Button onClick={toggleCart}>Fermer</Button>
+        </div>
+        {cart.length === 0 ? (
+          <p>Votre panier est vide.</p>
+        ) : (
+          <ul className="mt-4">
+            {cart.map((item) => (
+              <li key={item.plant_id} className="mb-2">
+                <div className="flex justify-between items-center">
+                  <span>{item.name}</span>
+                  <div className="flex items-center">
+                    <Button className='text-xl bg-green-500 hover:bg-green-800' onClick={() => updateQuantity(item.plant_id, (item.quantity || 1) - 1)}>-</Button>
+                    <span className="mx-2">{item.quantity}</span>
+                    <Button className='text-xl bg-green-500 hover:bg-green-800' onClick={() => updateQuantity(item.plant_id, (item.quantity || 1) + 1)}>+</Button>
+                  </div>
+                  <Button
+                    className="bg-red-500 hover:bg-red-800"
+                    onClick={() => removeFromCart(item.plant_id)}
+                  >
+                    Supprimer
+                  </Button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+        <div className='flex justify-end'>
+          <Button className='mt-12 px-4 py-2 rounded bg-green-500 hover:bg-green-800' onClick={handleCheckout}>Passer à la caisse</Button>
+        </div>
+      </div>
+    );
+    <div className="fixed top-0 right-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 h-full bg-white shadow-lg p-4 z-50">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Panier</h2>
         <Button onClick={toggleCart}>Fermer</Button>
@@ -46,7 +80,6 @@ const Cart: React.FC = () => {
         <Button className='mt-12 px-4 py-2 rounded bg-green-500 hover:bg-green-800' onClick={handleCheckout}>Passer à la caisse</Button>
       </div>
     </div>
-  );
 };
 
 export default Cart;
