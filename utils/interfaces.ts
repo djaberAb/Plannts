@@ -10,3 +10,14 @@ export interface Plant {
     category: 'intérieur' | 'extérieur' | 'succulent';
     owner_id: number;
 }
+
+export interface User {
+    user_id: number;
+    username: string;
+    email: string;
+    password: string;
+    firstname: string;
+    lastname: string;
+    address: string;
+    phone: string;
+}
