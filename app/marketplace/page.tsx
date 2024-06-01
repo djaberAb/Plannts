@@ -4,7 +4,7 @@ import Navbar from '@/components/navbar';
 import PlantCard from '@/components/plant_card';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { fetchPlants } from '@/utils/db'; // Replace with your API call
+import { fetchPlants } from '../api/plants'; // Replace with your API call
 import { Plant } from '@/utils/interfaces';
 import { CartProvider } from '@/utils/cart_context';
 
@@ -15,7 +15,7 @@ export default function Marketplace() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const plantsData = await fetchPlants(); // Replace with your API call
+        const plantsData = await fetchPlants();
         setPlants(plantsData);
       } catch (error) {
         console.error('Error fetching plant data:', error);

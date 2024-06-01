@@ -9,6 +9,7 @@ export interface Plant {
     stock: number;
     category: 'intérieur' | 'extérieur' | 'succulent';
     owner_id: number;
+    quantity?: number;
 }
 
 export interface User {

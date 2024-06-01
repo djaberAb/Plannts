@@ -1,8 +1,9 @@
 "use client"
 
 import Image from "next/image"
-import Link from "next/link"
 import loginIMG from "@/public/login_image.jpg"
+
+import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,8 +11,10 @@ import { Label } from "@/components/ui/label"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { useUser } from '@/utils/user_context';
 
 import { query } from "@/utils/db"
+import { User } from "@/utils/interfaces"
 
 
 export default function Login() {
@@ -19,18 +22,26 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
+  const { isLoggedIn, login, logout } = useUser();
+
+
   const Router = useRouter();
 
-  async function handleLogin(): Promise<void> {
-    await query("SELECT * FROM users WHERE (email = ? OR username = ?) AND password = ?", [email, email, password])
-    if (!query) {
-      console.log("Utilisateur non trouvé")
-      return
+  async function handleLogin(): Promise<any> {
+    const result = await query(
+      "SELECT * FROM users WHERE (email = ? OR username = ?) AND password = ?",
+      [email, email, password]
+    ) as User[];
+    if (!Array.isArray(result) || result.length === 0) {
+      alert("Utilisateur non trouvé");
+      return ;
     }
-    console.log("Utilisateur trouvé")
-    Router.push("/home")
-    
-  }
+    console.log("Utilisateur trouvé");
+    const user = result[0];
+    login(user);
+    Router.push("/");
+  };
+
 
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen">
