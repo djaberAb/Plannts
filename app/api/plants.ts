@@ -19,9 +19,9 @@ export async function fetchPlantsByUserId(userId: string): Promise<Plant[]> {
 
 export async function addPlant(plant: Plant): Promise<void> {
     const { name, description, price, category, owner_id, rating, species, stock, image_url } = plant;
-    await query('INSERT INTO plants (name, description, price, category, owner_id, rating, species, stock, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+    await query('INSERT INTO plants `name`, `description`, `price`, `category`, `owner_id`, `rating`, `species`, `stock`, `image_url` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
       [name, description, price, category, owner_id, rating, species, stock, image_url]);
-}
+}   
 
 export async function editPlant(plant: Plant): Promise<void> {
     const { plant_id, name, description, price, category, owner_id, rating, species, stock, image_url } = plant;

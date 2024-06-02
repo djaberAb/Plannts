@@ -3,18 +3,18 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { SIDENAV_ITEMS, SideNavItem } from '@/components/constants';
+import { SIDENAV_ITEMS, SideNavItem } from '@/components/constants_admin';
 import { FiChevronDown } from 'react-icons/fi';
+import { Button } from './ui/button';
 import { useUser } from '@/utils/user_context';
 import { useRouter } from 'next/navigation';
-import { Button } from './ui/button';
+
 
 
 const SideNav = ({ title }: { title: string }) => {
-
+  
   const { logout } = useUser();
   const router = useRouter();
-
 
   return (
     <div className="md:w-60 bg-white h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex">
@@ -51,6 +51,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
   const toggleSubMenu = () => {
     setSubMenuOpen(!subMenuOpen);
   };
+
 
   return (
     <div className="">
@@ -102,5 +103,6 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
         </Link>
       )}
     </div>
+    
   );
 };

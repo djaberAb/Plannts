@@ -38,8 +38,14 @@ export default function Login() {
     }
     console.log("Utilisateur trouvé");
     const user = result[0];
-    login(user);
-    Router.push("/");
+    if (user.role === "admin") {
+      login(user)
+      Router.push("/admin");
+    }
+    else if (user.role === "client") {
+      login(user)
+      Router.push("/");
+    }
   };
 
 

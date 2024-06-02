@@ -146,11 +146,11 @@ export default function Signup() {
     }
 
     await query("INSERT INTO users(`username`, `email`, `password`, `firstname`, `lastname`, `address`, `phone`) VALUES (?, ?, ?, ?, ?, ?, ?)", [username, email, password, firstName, lastName, address, phone]);
- 
+    
     if(!query) {
       alert("Échec de la requête");
       return;
     }
-    Router.push("/home");
+    Router.push("/login");
   }
 }

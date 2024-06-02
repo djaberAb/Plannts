@@ -21,4 +21,5 @@ export interface User {
     lastname: string;
     address: string;
     phone: string;
+    role: 'admin' | 'client';
 }
