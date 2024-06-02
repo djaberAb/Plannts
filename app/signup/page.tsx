@@ -31,7 +31,7 @@ export default function Signup() {
   return (
     <Card className="mx-auto max-w-sm my-5">
       <CardHeader>
-        <CardTitle className="text-xl">S'inscrire</CardTitle>
+        <CardTitle className="text-xl">S&apos;inscrire</CardTitle>
         <CardDescription>
           Entrez vos informations pour créer un compte
         </CardDescription>
@@ -64,7 +64,7 @@ export default function Signup() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="username">Nom d'utilisateur</Label>
+                <Label htmlFor="username">Nom d&apos;utilisateur</Label>
                 <Input
                   id="username"
                   placeholder="rania"

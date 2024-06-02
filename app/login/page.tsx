@@ -101,9 +101,9 @@ export default function Login() {
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
-            Vous n'avez pas de compte ?{" "}
+            Vous n&apos;avez pas de compte ?{" "}
             <Link href="./signup" className="underline hover:font-bold">
-              S'inscrire
+              S&apos;inscrire
             </Link>
           </div>
         </div>

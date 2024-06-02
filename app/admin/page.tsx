@@ -1,4 +1,5 @@
-"use client"
+// components/AdminUsers.tsx
+"use client";
 
 import React, { useState, useEffect } from 'react';
 import { useUser } from '@/utils/user_context';
@@ -9,9 +10,9 @@ import { User } from '@/utils/interfaces';
 import UserModal from '@/components/user_modal';
 
 const AdminUsers = () => {
-  const { isLoggedIn, userData, logout } = useUser();
+  const { isLoggedIn, userData } = useUser();
   const router = useRouter();
-  const [users, setUsers] = useState<Omit<User, 'password'>[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [editUserData, setEditUserData] = useState<Partial<User> | undefined>(undefined);
 
@@ -21,10 +22,13 @@ const AdminUsers = () => {
     }
   }, [isLoggedIn]);
 
-  if (!isLoggedIn) {
-    if (typeof window !== 'undefined') {
+  useEffect(() => {
+    if (!isLoggedIn && typeof window !== 'undefined') {
       router.push('/login');
     }
+  }, [isLoggedIn, router]);
+
+  if (!isLoggedIn) {
     return null;
   }
 
@@ -34,11 +38,8 @@ const AdminUsers = () => {
     setUsers(updatedUsers);
   };
 
-  const handleEditUser = async (user: Partial<Omit<User, 'password'>>) => {
-    if (user.user_id === undefined) {
-      throw new Error('user_id is required');
-    }
-    await editUser(user as Omit<User, 'password'>);
+  const handleEditUser = async (user: Partial<User>) => {
+    await editUser(user);
     const updatedUsers = await fetchUsers();
     setUsers(updatedUsers);
   };
@@ -49,8 +50,8 @@ const AdminUsers = () => {
     setUsers(updatedUsers);
   };
 
-  const openModal = (user?: Omit<User, 'password'>) => {
-    setEditUserData(user || undefined);
+  const openModal = (user?: Partial<User>) => {
+    setEditUserData(user || {});
     setModalOpen(true);
   };
 
@@ -61,9 +62,9 @@ const AdminUsers = () => {
 
   const handleSave = (user: Partial<User>) => {
     if (editUserData) {
-      handleEditUser(user);
-    } else {
       handleAddUser(user as Omit<User, 'user_id'>);
+    } else {
+      handleEditUser(user);
     }
     closeModal();
   };
@@ -71,35 +72,55 @@ const AdminUsers = () => {
   return (
     <div className="flex">
       <SideNav title={'Dashboard'} />
-      <div className="ml-60 pt-2 px-4 space-y-2 bg-green-500 flex-grow pb-4 align">
-        {userData && (
-          <div>
-            <h1 className='text-white font-bold mb-4 mt-1'>Manage Users</h1>
-            <button onClick={() => openModal()} className="mb-4 p-2 bg-blue-500 text-white rounded">Add User</button>
-            <div className="space-y-2">
+      <div className="ml-60 pt-2 px-4 space-y-4 flex-grow">
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-bold">Users</h2>
+          <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={() => openModal()}>
+            Add User
+          </button>
+        </div>
+        <div className="bg-white p-4 rounded shadow">
+          <table className="w-full">
+            <thead>
+              <tr>
+                <th className="text-left">Username</th>
+                <th className="text-left">Email</th>
+                <th className="text-left">First Name</th>
+                <th className="text-left">Last Name</th>
+                <th className="text-left">Role</th>
+                <th className="text-left">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
               {users.map(user => (
-                <div key={user.user_id} className="relative p-4 bg-white rounded shadow">
-                  <div className="flex justify-between">
-                    <div>
-                      <h2 className="text-xl font-bold">{user.username}</h2>
-                      <p>{user.email}</p>
-                      <p>{user.firstname} {user.lastname}</p>
-                      <p>{user.address}</p>
-                      <p>{user.phone}</p>
-                      <p>{user.role}</p>
-                    </div>
-                    <div className="space-x-2">
-                      <button onClick={() => openModal(user)} className="p-1 bg-yellow-300 rounded">Edit</button>
-                      <button onClick={() => handleDeleteUser(user.user_id)} className="p-1 bg-red-500 text-white rounded">Delete</button>
-                    </div>
-                  </div>
-                </div>
+                <tr key={user.user_id}>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
+                  <td>{user.firstname}</td>
+                  <td>{user.lastname}</td>
+                  <td>{user.role}</td>
+                  <td>
+                    <button className="bg-yellow-500 text-white px-2 py-1 rounded" onClick={() => openModal(user)}>
+                      Edit
+                    </button>
+                    <button className="bg-red-500 text-white px-2 py-1 rounded ml-2" onClick={() => handleDeleteUser(user.user_id)}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
               ))}
-            </div>
-          </div>
+            </tbody>
+          </table>
+        </div>
+        {modalOpen && (
+          <UserModal
+            isOpen={modalOpen}
+            onClose={closeModal}
+            onSave={handleSave}
+            initialUser={editUserData}
+          />
         )}
       </div>
-      <UserModal isOpen={modalOpen} onClose={closeModal} onSave={handleSave} initialUser={editUserData} />
     </div>
   );
 };

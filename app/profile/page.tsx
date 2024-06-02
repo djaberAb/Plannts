@@ -7,12 +7,12 @@ import SideNav from '@/components/sideNav';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { handleUpdateUser } from "../api/users";
+import { editUser} from "../api/users";
 
 const ProfilePage = () => {
   const { isLoggedIn, userData, logout } = useUser();
   const router = useRouter();
-
+  const user = userData;
   const [edit, setEdit] = React.useState(false);
 
   if (!isLoggedIn) {
@@ -22,18 +22,18 @@ const ProfilePage = () => {
     }
     return null; // Render nothing while redirecting
   }
-
+  const [username, setUsername] = useState(userData?.username ?? '');
   const [firstName, setFirstName] = useState(userData?.firstname ?? '');
   const [lastName, setLastName] = useState(userData?.lastname ?? '');
-  const [username, setUsername] = useState(userData?.username ?? '');
   const [phone, setPhone] = useState(userData?.phone ?? '');
   const [email, setEmail] = useState(userData?.email ?? '');
   const [address, setAddress] = useState(userData?.address ?? '');
-  const userId = userData?.user_id;  
+
 
 
   return (
     <div className="flex">
+
       <SideNav title={userData?.username ?? ''}/>
       <div className="ml-60 pt-2 px-4 space-y-2 bg-green-500 flex-grow pb-4 font-bold">
         {userData && (
@@ -42,7 +42,7 @@ const ProfilePage = () => {
             <span>
               <Button onClick={() => {
                 if (edit == true) {
-                  handleUpdateUser( username, email, firstName, lastName, address, phone, String(userId))
+                  editUser(userData) // Replace 'user' with 'userId'
                 }  
                 setEdit(!edit)
               }}
@@ -96,7 +96,7 @@ const ProfilePage = () => {
                     placeholder={userData?.address ?? ''}
                   />
                 </div><div>
-                  <Label className = 'text-white font-semibold mb-2' htmlFor="username">Nom d'utilisateur</Label>
+                  <Label className = 'text-white font-semibold mb-2' htmlFor="username">Nom d&apos;utilisateur</Label>
                   <Input
                     
                     id="username"
@@ -115,7 +115,7 @@ const ProfilePage = () => {
                     onChange={(e) => {
                       setPhone(e.target.value)
                     }}
-                    placeholder={userData?.phone ?? ''}
+                    placeholder={userData?.phone?.toString() ?? '0641284558'}
                   />
                 </div>
                 

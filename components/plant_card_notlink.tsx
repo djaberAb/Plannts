@@ -47,10 +47,12 @@ const PlantCard: React.FC<Plant> = ({
                     <CardDescription className="text-sm">{description}</CardDescription>
                 </CardContent>
             <CardFooter className="mt-2 p-2">
-                <p className="text-lg font-semibold flex justify-end">{price} €</p>
+                <p className="text-lg font-semibold flex justify-end">{price} DZD</p>
             </CardFooter>
         </Card>
     );
 };
 
 export default PlantCard;
+
+

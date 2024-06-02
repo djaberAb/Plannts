@@ -7,10 +7,10 @@ import SideNav from '@/components/sideNav';
 import { fetchPlantsByUserId, addPlant, editPlant, deletePlant } from '../../api/plants';
 import { Plant } from '@/utils/interfaces';
 import PlantCard from '@/components/plant_card';
-import PlantModal from '@/components/plant-modal';
+import PlantModal from '@/components/plant_modal';
 
 const ProfilePage = () => {
-  const { isLoggedIn, userData, logout } = useUser();
+  const { isLoggedIn, userData } = useUser();
   const router = useRouter();
   const [plants, setPlants] = useState<Plant[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -18,7 +18,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (userData) {
-      fetchPlantsByUserId(userData.user_id.toString()).then(setPlants);
+      fetchPlantsByUserId(userData.user_id).then(setPlants);
     }
   }, [userData]);
 
@@ -32,7 +32,7 @@ const ProfilePage = () => {
   const handleAddPlant = async (plant: Plant) => {
     if (userData) {
       await addPlant({ ...plant, owner_id: userData.user_id });
-      const updatedPlants = await fetchPlantsByUserId(userData.user_id.toString()); // Convert userData.user_id to string
+      const updatedPlants = await fetchPlantsByUserId(userData.user_id); 
       setPlants(updatedPlants);
     }
   };
@@ -40,7 +40,7 @@ const ProfilePage = () => {
   const handleEditPlant = async (plant: Plant) => {
     if (userData) {
       await editPlant(plant);
-      const updatedPlants = await fetchPlantsByUserId(userData.user_id.toString()); // Convert userData.user_id to string
+      const updatedPlants = await fetchPlantsByUserId(userData.user_id);
       setPlants(updatedPlants);
     }
   };
@@ -48,7 +48,7 @@ const ProfilePage = () => {
   const handleDeletePlant = async (plantId: number) => {
     await deletePlant(plantId);
     if (userData) {
-      const updatedPlants = await fetchPlantsByUserId(userData.user_id.toString());
+      const updatedPlants = await fetchPlantsByUserId(userData.user_id);
       setPlants(updatedPlants);
     }
   };

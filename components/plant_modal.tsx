@@ -36,9 +36,9 @@ const PlantModal: React.FC<PlantModalProps> = ({ isOpen, onClose, onSave, initia
         <input type="number" name="price" placeholder="Price" value={plant.price || 0} onChange={handleChange} className="mb-2 p-2 border" />
         <select name="category" value={plant.category || ''} onChange={handleChange} className="mb-2 p-2 border">
           <option value="" disabled>Select Category</option>
-          <option value="intérieur">Intérieur</option>
-          <option value="extérieur">Extérieur</option>
-          <option value="succulent">Succulent</option>
+          <option value="intérieur">intérieur</option>
+          <option value="extérieur">extérieur</option>
+          <option value="succulent">succulent</option>
         </select>
         <input type="text" name="species" placeholder="Species" value={plant.species || ''} onChange={handleChange} className="mb-2 p-2 border" />
         <input type="number" name="stock" placeholder="Stock" value={plant.stock || 0} onChange={handleChange} className="mb-2 p-2 border" />

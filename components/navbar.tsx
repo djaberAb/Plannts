@@ -30,7 +30,7 @@ const Navbar = () => {
 
   return (
     <nav className="shadow-sm fixed w-full z-10 bg-white">
-      <div className="w-full">
+      <div className="w-full"></div>
         <div className="flex items-center h-20 w-full">
           <div className="flex items-center mx-20 justify-between w-full">
             <Link className="flex justify-center items-center flex-shink-0" href={"/"}>
@@ -135,78 +135,89 @@ const Navbar = () => {
               )}
             </Button>
           </div>
-        </div>
-        <Transition
-          show={isOpen}
-          enter="transition ease-out duration-100 transform"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
-          leave="transition ease-in duration-75 transform"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
+        </div>                                                                                                                                                                                                                                                                                                                                                              <Transition
+  show={isOpen}
+  enter="transition ease-out duration-100 transform"
+  enterFrom="opacity-0 scale-95"
+  enterTo="opacity-100 scale-100"
+  leave="transition ease-in duration-75 transform"
+  leaveFrom="opacity-100 scale-100"
+  leaveTo="opacity-0 scale-95"
+>
+  {(ref) => (
+    <div className="md:hidden" id="mobile-menu">
+      <div ref={ref} className="bg-white px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <Link
+          className={`cursor-pointer hover:bg-green-600 text-black hover:text-white block px-3 py-2 rounded-md text-base font-medium ${isActive(
+            '/'
+          )}`}
+          href={'/'}
         >
-          {(ref) => (
-            <div className="md:hidden" id="mobile-menu">
-              <div ref={ref} className="bg-white px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <Link
-                  className={`cursor-pointer hover:bg-green-600 text-black hover:text-white block px-3 py-2 rounded-md text-base font-medium ${isActive(
-                    '/'
-                  )}`}
-                  href={'/'}
-                >
-                  Accueil
-                </Link>
+          Accueil
+        </Link>
 
-                <Link
-                  href={'/about'}
-                  className={`cursor-pointer hover:bg-green-600 text-black hover:text-white block px-3 py-2 rounded-md text-base font-medium ${isActive(
-                    '/about'
-                  )}`}
-                >
-                  À propos
-                </Link>
-
-                <Link
-                  href={'/marketplace'}
-                  className={`cursor-pointer hover:bg-green-600 text-black hover:text-white block px-3 py-2 rounded-md text-base font-medium ${isActive(
-                    '/marketplace'
-                  )}`}
-                >
-                  Marché
-                </Link>
-
-                <Link
-                  href={'/contact'}
-                  className={`cursor-pointer hover:bg-green-600 text-black hover:text-white block px-3 py-2 rounded-md text-base font-medium ${isActive(
-                    '/contact'
-                  )}`}
-                >
-                  Contact
-                </Link>
-              </div>
-            </div>
-          )}
-        </Transition>
-        <Transition
-          show={isCartOpen}
-          enter="transition ease-out duration-300 transform"
-          enterFrom="translate-x-full"
-          enterTo="translate-x-0"
-          leave="transition ease-in duration-300 transform"
-          leaveFrom="translate-x-0"
-          leaveTo="translate-x-full"
+        <Link
+          href={'/about'}
+          className={`cursor-pointer hover:bg-green-600 text-black hover:text-white block px-3 py-2 rounded-md text-base font-medium ${isActive(
+            '/about'
+          )}`}
         >
-          {(ref) => (
-            <div
-              ref={ref}
-              className="fixed top-0 right-0 h-screen bg-white w-screen shadow-lg z-50 p-4 overflow-y-auto"
+          À propos
+        </Link>
+
+        <Link
+          href={'/marketplace'}
+          className={`cursor-pointer hover:bg-green-600 text-black hover:text-white block px-3 py-2 rounded-md text-base font-medium ${isActive(
+            '/marketplace'
+          )}`}
+        >
+          Marché
+        </Link>
+
+        <Link
+          href={'/contact'}
+          className={`cursor-pointer hover:bg-green-600 text-black hover:text-white block px-3 py-2 rounded-md text-base font-medium ${isActive(
+            '/contact'
+          )}`}
+        >
+          Contact
+        </Link>
+
+        {isLoggedIn ? (
+          <>
+            <Link
+              href={'/profile'}
+              className={`cursor-pointer hover:bg-green-600 text-black hover:text-white block px-3 py-2 rounded-md text-base font-medium ${isActive(
+                '/profile'
+              )}`}
             >
-              <Cart />
-            </div>
-          )}
-        </Transition>
+              Profil
+            </Link>
+            <Button
+              onClick={() => {
+                logout();
+                router.push('/login');
+              }}
+              className="cursor-pointer bg-transparent hover:bg-green-600 text-black hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+            >
+              Déconnexion
+            </Button>
+          </>
+        ) : (
+          <Link
+            href={'/login'}
+            className={`cursor-pointer hover:bg-green-600 text-black hover:text-white block px-3 py-2 rounded-md text-base font-medium ${isActive(
+              '/login'
+            )}`}
+          >
+            Connexion
+          </Link>
+        )}
       </div>
-    </nav>
+    </div>
+  )}
+</Transition>   
+</nav>
   );
 };
 

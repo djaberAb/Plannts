@@ -7,13 +7,14 @@ import SideNav from '@/components/sideNav_admin';
 import { fetchPlants, addPlant, editPlant, deletePlant } from '../../api/plants';
 import { Plant } from '@/utils/interfaces';
 import PlantCard from '@/components/plant_card_notlink';
-import PlantModal from '@/components/plant-modal';
+import PlantModal from '@/components/plant_modal';
 
 const Plants = () => {
   const { isLoggedIn, userData, logout } = useUser();
   const router = useRouter();
   const [plants, setPlants] = useState<Plant[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalEDOpen, setModalEDOpen] = useState(false);
   const [editPlantData, setEditPlantData] = useState<Partial<Plant> | undefined>(undefined);
 
   useEffect(() => {

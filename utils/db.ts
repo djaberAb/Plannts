@@ -11,13 +11,17 @@ const pool = mysql.createPool({
 });
 
 export async function query(query: string, data: any[]) {
+    let connection;
     try {
-        const connection = await pool.getConnection();
-        const [rows, fields] = await connection.execute(query, data);
-        connection.release();
-        return JSON.parse(JSON.stringify(rows));
+      connection = await pool.getConnection();
+      const [rows] = await connection.execute(query, data);
+      return JSON.parse(JSON.stringify(rows));
     } catch (error) {
-        console.error(error);
-        return null;
+      console.error('Database query error:', error);
+      return null;
+    } finally {
+      if (connection) {
+        connection.release();
+      }
     }
-}
+  }

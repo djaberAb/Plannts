@@ -65,7 +65,7 @@ const PlantCard: React.FC<Plant> = ({
                 </CardContent>
             </Link>
             <CardFooter className="mt-2 p-2">
-                <p className="text-lg font-semibold flex justify-end">{price} €</p>
+                <p className="text-lg font-semibold flex justify-end">{price} DZD</p>
                 {/* <Button className="ml-auto bg-green-500 hover:bg-green-800 text-white px-4 py-2 rounded" onClick={() => addToCart(plant)}>
                     Ajouter au panier
                 </Button> */}
