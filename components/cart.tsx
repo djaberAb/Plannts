@@ -9,7 +9,7 @@ const Cart: React.FC = () => {
   if (!isCartOpen) return null;
 
   function handleCheckout(event: MouseEvent<HTMLButtonElement>): void {
-    throw new Error('Fonction non implémentée.');
+    
   }
 
   return (

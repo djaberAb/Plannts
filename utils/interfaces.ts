@@ -24,4 +24,5 @@ export interface Plant {
     species: string;
     stock: number;
     image_url: string;
+    quantity?: number;
 }
