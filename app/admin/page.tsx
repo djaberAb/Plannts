@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import SideNav from '@/components/sideNav_admin';
 import { fetchUsers, addUser, editUser, deleteUser } from '../api/users';
 import { User } from '@/utils/interfaces';
-import UserModal from '@/components/user_modal';
+import {UserModal} from '@/components/user_modal';
 
 const AdminUsers = () => {
   const { isLoggedIn, userData } = useUser();
@@ -32,7 +32,7 @@ const AdminUsers = () => {
     return null;
   }
 
-  const handleAddUser = async (user: Omit<User, 'user_id'>) => {
+  const handleAddUser = async (user: Partial<User>) => {
     await addUser(user);
     const updatedUsers = await fetchUsers();
     setUsers(updatedUsers);
@@ -60,14 +60,14 @@ const AdminUsers = () => {
     setEditUserData(undefined);
   };
 
-  const handleSave = (user: Partial<User>) => {
-    if (editUserData) {
-      handleAddUser(user as Omit<User, 'user_id'>);
-    } else {
-      handleEditUser(user);
-    }
-    closeModal();
-  };
+ const handleSave = (user: Partial<User>) => {
+  if (editUserData && editUserData.user_id) {
+    handleEditUser(user);
+  } else {
+    handleAddUser(user as Omit<User, 'user_id'>);
+  }
+  closeModal();
+};
 
   return (
     <div className="flex">

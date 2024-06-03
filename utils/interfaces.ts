@@ -1,4 +1,5 @@
 // interfaces.ts
+// utils/interfaces.ts
 export interface User {
     user_id: number;
     username: string;
@@ -8,8 +9,9 @@ export interface User {
     lastname: string;
     address: string;
     phone: string;
-    role: 'admin' | 'client';
-}
+    role?: "admin" | "client";
+  }
+  
 
 export interface Plant {
     plant_id: number;

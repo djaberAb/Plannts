@@ -14,7 +14,13 @@ export type SideNavItem = {
 };
 
 export const SIDENAV_ITEMS: SideNavItem[] = [
-    {
+    
+  {
+    title: 'Home',
+    path: '/',
+    icon: <FiHome size={24} />,
+  },
+  {
       title: 'users',
       path: '/admin',
       icon: <FiUser  size={24} />,

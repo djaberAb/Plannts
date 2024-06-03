@@ -6,12 +6,19 @@ export async function fetchUsers(): Promise<User[]> {
   return query('SELECT * FROM users', []) as Promise<User[]>;
 }
 
-export async function addUser(user: Omit<User, 'user_id'>): Promise<void> {
+export const addUser = async (user: Partial<User>) => {
   const { username, email, password, firstname, lastname, address, phone, role } = user;
-  await query(
-    'INSERT INTO users (`username`, `email`, `password`, `firstname`, `lastname`, `address`, `phone`, `role`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-    [username, email, password, firstname, lastname, address, phone, role]
-  );
+  
+  // Log the user data being passed
+  console.log('Adding user with params:', username, email, password, firstname, lastname, address, phone, role);
+
+  const sql = 'INSERT INTO users (`username`, `email`, `password`, `firstname`, `lastname`, `address`, `phone`, `role`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);'
+
+  // Check the result of the query
+  const result = await query(sql, [username, email, password, firstname, lastname, address, phone, role]);
+  console.log('Add user result:', result);
+
+  return result;
 }
 
 export async function editUser(user: Partial<User>): Promise<void> {
