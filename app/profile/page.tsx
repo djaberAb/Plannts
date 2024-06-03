@@ -10,18 +10,11 @@ import { Button } from '@/components/ui/button';
 import { editUser} from "../api/users";
 
 const ProfilePage = () => {
-  const { isLoggedIn, userData, logout } = useUser();
+  const { isLoggedIn, userData } = useUser();
   const router = useRouter();
   const user = userData;
   const [edit, setEdit] = React.useState(false);
-
-  if (!isLoggedIn) {
-    // If the user is not logged in, redirect to the login page
-    if (typeof window !== 'undefined') {
-      router.push('/login');
-    }
-    return null; // Render nothing while redirecting
-  }
+  
   const [username, setUsername] = useState(userData?.username ?? '');
   const [firstName, setFirstName] = useState(userData?.firstname ?? '');
   const [lastName, setLastName] = useState(userData?.lastname ?? '');
@@ -29,6 +22,13 @@ const ProfilePage = () => {
   const [email, setEmail] = useState(userData?.email ?? '');
   const [address, setAddress] = useState(userData?.address ?? '');
 
+  if (!isLoggedIn) {
+    // Si l'utilisateur n'est pas connecté, redirigez vers la page de connexion
+    if (typeof window !== 'undefined') {
+      router.push('/login');
+    }  
+    return null; // Ne rien afficher pendant la redirection
+  }  
 
 
   return (
@@ -42,13 +42,13 @@ const ProfilePage = () => {
             <span>
               <Button onClick={() => {
                 if (edit == true) {
-                  editUser(userData) // Replace 'user' with 'userId'
+                  editUser(userData) // Remplacez 'user' par 'userId'
                 }  
                 setEdit(!edit)
               }}
               className= 'bg-green-500 text-white font-semibold'
               >
-                {edit ? 'Save' : 'Edit'}
+                {edit ? 'Enregistrer' : 'Modifier'}
               </Button>
             </span>
               <div className='grid gap-4'>

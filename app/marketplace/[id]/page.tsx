@@ -1,6 +1,6 @@
 "use client";
 
-import { Plant, useCart } from '@/utils/cart_context';
+import { useCart } from '@/utils/cart_context';
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
 import Navbar from '@/components/navbar';
@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import Cart from '@/components/cart';
+import { Plant } from '@/utils/interfaces';
 
 const PlantDetail: React.FC = () => {
   const searchParams = useSearchParams();
@@ -61,7 +62,7 @@ const PlantDetail: React.FC = () => {
           <Label className="mt-4 text-lg">{description}</Label>
           <div className="mt-2 grid gap-4">
             <div className="grid gap-2">
-              <Label className="text-lg">Prix: ${price}</Label>
+              <Label className="text-lg">Prix: {price} DZD</Label>
               <Label className="text-lg">Catégorie: {category}</Label>
               <Label className="text-lg">Propriétaire: {owner_id}</Label>
               <Label className="text-lg">Évaluation: {rating}</Label>

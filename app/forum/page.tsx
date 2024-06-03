@@ -1,86 +1,68 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { getMessages, addMessage } from '@/app/api/messages'; // Adjust the path if needed
+import { useUser } from '@/utils/user_context';
+import { Button } from '@/components/ui/button';
 
-const Forum = () => {
-  const [threads, setThreads] = useState([]);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+const CommandesPage: React.FC = () => {
+  const [messages, setMessages] = useState<any[]>([]);
+  const { userData } = useUser();
+  const userId = userData?.user_id;
 
   useEffect(() => {
-    fetchThreads();
+    const fetchMessages = async () => {
+      const fetchedMessages = await getMessages();
+      setMessages(fetchedMessages);
+    };
+    fetchMessages();
   }, []);
 
-  const fetchThreads = async () => {
+  const handleSendMessage = async (content: string) => {
+    if (!userId) return;
     try {
-      setIsLoading(true);
-      const res = await fetch('/api/threads');
-      const data = await res.json();
-      setThreads(data);
+      await addMessage(userId, content);
+      const updatedMessages = await getMessages();
+      setMessages(updatedMessages);
+      // Clear the input after sending a message
+      (document.getElementById('messageContent') as HTMLTextAreaElement).value = '';
     } catch (error) {
-      console.error('Error fetching threads:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      setIsLoading(true);
-      await fetch('/api/threads', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title, content }),
-      });
-      fetchThreads();
-      setTitle('');
-      setContent('');
-    } catch (error) {
-      console.error('Error creating thread:', error);
-    } finally {
-      setIsLoading(false);
+      console.error('Failed to send message', error);
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4">
-      <h1 className="text-3xl font-semibold mb-6">Forum Threads</h1>
-      <form onSubmit={handleSubmit} className="mb-6">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full border border-gray-300 rounded-md py-2 px-3 mb-2"
-        />
-        <textarea
-          placeholder="Content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          className="w-full border border-gray-300 rounded-md py-2 px-3 mb-2"
-          rows={4}
-        />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out hover:bg-blue-600"
-          disabled={isLoading}
-        >
-          {isLoading ? 'Creating...' : 'Create Thread'}
-        </button>
-      </form>
-      <ul>
-        {threads.map((thread: any) => (
-          <li key={thread.id} className="border border-gray-300 rounded-md py-2 px-3 mb-2">
-            {thread.title}
-          </li>
+    <div className="container mx-auto px-4 py-8 flex flex-col h-screen">
+      <h2 className="text-2xl font-semibold mb-4">Forum</h2>
+      <div className="flex-grow overflow-y-auto mb-4">
+        {messages.map(message => (
+          <div
+            key={message.message_id}
+            className={`p-4 mb-4 rounded-md ${
+              message.user_id === userId ? 'bg-green-100 self-end text-right' : 'bg-gray-100'
+            }`}
+          >
+            <p className="text-lg font-semibold">{message.username}</p>
+            <p className="text-gray-600">{message.content}</p>
+            <p className="text-gray-600 text-sm">{new Date(message.created_at).toLocaleString()}</p>
+          </div>
         ))}
-      </ul>
+      </div>
+      <div className="sticky bottom-0 bg-white py-4">
+        <textarea
+          id="messageContent"
+          className="w-full border rounded p-2 mb-2"
+          placeholder="Type your message here..."
+        ></textarea>
+        <Button
+          className="w-full bg-blue-500 text-white rounded py-2"
+          onClick={() => handleSendMessage((document.getElementById('messageContent') as HTMLTextAreaElement).value)}
+        >
+          Send
+        </Button>
+      </div>
     </div>
   );
 };
 
-export default Forum;
+export default CommandesPage;

@@ -9,7 +9,7 @@ import { Plant } from '@/utils/interfaces';
 import PlantCard from '@/components/plant_card';
 import PlantModal from '@/components/plant_modal';
 
-const ProfilePage = () => {
+const PageProfil = () => {
   const { isLoggedIn, userData } = useUser();
   const router = useRouter();
   const [plants, setPlants] = useState<Plant[]>([]);
@@ -74,19 +74,19 @@ const ProfilePage = () => {
 
   return (
     <div className="flex">
-      <SideNav title={'Dashboard'} />
+      <SideNav title={'Tableau de bord'} />
       <div className="ml-60 pt-2 px-4 space-y-2 bg-green-500 flex-grow pb-4 align">
         {userData && (
           <div>
-            <h1 className='text-white font-bold mb-4 mt-1'>My Plants</h1>
-            <button onClick={() => openModal()} className="mb-4 p-2 bg-blue-500 text-white rounded">Add Plant</button>
+            <h1 className='text-white font-bold mb-4 mt-1'>Mes Plantes</h1>
+            <button onClick={() => openModal()} className="mb-4 p-2 bg-blue-500 text-white rounded">Ajouter une plante</button>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {plants.map(plant => (
                 <div key={plant.plant_id} className="relative">
                   <PlantCard {...plant} />
-                  <div className="absolute top-0 right-0 p-2 space-x-2">
-                    <button onClick={() => openModal(plant)} className="p-1 bg-yellow-300 rounded">Edit</button>
-                    <button onClick={() => handleDeletePlant(plant.plant_id)} className="p-1 bg-red-500 text-white rounded">Delete</button>
+                  <div className="absolute top-0 p-2 space-x-2">
+                    <button onClick={() => openModal(plant)} className="p-1 bg-yellow-300 rounded">Modifier</button>
+                    <button onClick={() => handleDeletePlant(plant.plant_id)} className="p-1 bg-red-500 text-white rounded">Supprimer</button>
                   </div>
                 </div>
               ))}
@@ -99,4 +99,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default PageProfil;

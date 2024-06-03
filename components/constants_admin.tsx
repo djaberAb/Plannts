@@ -16,17 +16,17 @@ export type SideNavItem = {
 export const SIDENAV_ITEMS: SideNavItem[] = [
     
   {
-    title: 'Home',
+    title: 'Accueil',
     path: '/',
     icon: <FiHome size={24} />,
   },
   {
-      title: 'users',
+      title: 'Utilisateurs',
       path: '/admin',
       icon: <FiUser  size={24} />,
     },
     {
-        title: 'Plants',
+        title: 'Plantes',
         path: '/admin/plants',
         icon: <BiLeaf size={24} />,
       },
@@ -36,13 +36,13 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     //   icon: <FiBell size={24} />,
     // },
     {
-      title: 'Settings',
+      title: 'Paramètres',
       path: '/settings',
       icon: <FiSettings size={24} />,
       submenu: true,
       subMenuItems: [
-        { title: 'Account', path: '/settings/account' },
-        { title: 'Privacy', path: '/settings/privacy' },
+        { title: 'Compte', path: '/settings/account' },
+        { title: 'Confidentialité', path: '/settings/privacy' },
       ],
     },
   ];

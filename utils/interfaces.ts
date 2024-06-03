@@ -26,3 +26,10 @@ export interface Plant {
     image_url: string;
     quantity?: number;
 }
+
+export interface Message {
+  message_id: number;
+  content: string;
+  created_at: string;
+  username: string;
+}
