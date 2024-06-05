@@ -1,17 +1,20 @@
 "use client"
 
 import Image from "next/image"
-import Link from "next/link"
 import loginIMG from "@/public/login_image.jpg"
+
+import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 import { useState } from "react"
-import { query } from "@/utils/db"
 import { useRouter } from "next/navigation"
+import { useUser } from '@/utils/user_context';
 
+import { query } from "@/utils/db"
+import { User } from "@/utils/interfaces"
 
 
 export default function Login() {
@@ -19,32 +22,46 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
+  const { isLoggedIn, login, logout } = useUser();
+
+
   const Router = useRouter();
 
-  async function handleLogin(): Promise<void> {
-    await query("SELECT * FROM users WHERE (email = ? OR username = ?) AND password = ?", [email, email, password])
-    if (!query) {
-      console.log("User not found")
-      return
+  async function handleLogin(): Promise<any> {
+    const result = await query(
+      "SELECT * FROM users WHERE (email = ? OR username = ?) AND password = ?",
+      [email, email, password]
+    ) as User[];
+    if (!Array.isArray(result) || result.length === 0) {
+      alert("Utilisateur non trouvé");
+      return ;
     }
-    console.log("User found")
-    Router.push("/")
-    
-  }
+    console.log("Utilisateur trouvé");
+    const user = result[0];
+    if (user.role === "admin") {
+      login(user)
+      Router.push("/admin");
+    }
+    else if (user.role === "client") {
+      login(user)
+      Router.push("/");
+    }
+  };
+
 
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen">
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
-            <h1 className="text-3xl font-bold">Login</h1>
+            <h1 className="text-3xl font-bold">Connexion</h1>
             <p className="text-balance text-muted-foreground">
-              Enter your email below to login to your account
+              Entrez votre email ci-dessous pour vous connecter à votre compte
             </p>
           </div>
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">Adresse Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -56,12 +73,12 @@ export default function Login() {
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">Mot de passe</Label>
                 <Link
                   href="/forgot-password"
                   className="ml-auto inline-block text-sm underline"
                 >
-                  Forgot your password?
+                  Mot de passe oublié ?
                 </Link>
               </div>
               <Input 
@@ -77,16 +94,16 @@ export default function Login() {
               className="w-full bg-green-500 hover:bg-green-700"
               onClick={() => handleLogin()}
               >
-              Login
+              Connexion
             </Button>
             <Button variant="outline" className="w-full">
-              Login with Google
+              Connexion avec Google
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
-            <Link href="./signup" className="underline">
-              Sign up
+            Vous n&apos;avez pas de compte ?{" "}
+            <Link href="./signup" className="underline hover:font-bold">
+              S&apos;inscrire
             </Link>
           </div>
         </div>
@@ -103,3 +120,4 @@ export default function Login() {
     </div>
   )
 }
+

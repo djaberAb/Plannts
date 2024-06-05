@@ -1,7 +1,6 @@
 "use server"
 
 import mysql from 'mysql2/promise';
-
 // Create a connection pool
 const pool = mysql.createPool({
     host: "127.0.0.1",
@@ -12,19 +11,17 @@ const pool = mysql.createPool({
 });
 
 export async function query(query: string, data: any[]) {
+    let connection;
     try {
-        // Get a connection from the pool
-        const connection = await pool.getConnection();
-
-        // Execute the query
-        const [rows, fields] = await connection.execute(query, data);
-
-        // Release the connection back to the pool
-        connection.release();
-
-        return rows;
+      connection = await pool.getConnection();
+      const [rows] = await connection.query(query, data);
+      return JSON.parse(JSON.stringify(rows));
     } catch (error) {
-        console.error(error);
-        return null;
+      console.error('Database query error:', error);
+      return null;
+    } finally {
+      if (connection) {
+        connection.release();
+      }
     }
-}
+  }
