@@ -31,7 +31,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
       },
     {
       title: 'Notifications',
-      path: 'profile/notifications',
+      path: '/profile/notifications',
       icon: <FiBell size={24} />,
     },
     {

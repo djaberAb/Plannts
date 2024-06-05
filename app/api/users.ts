@@ -32,3 +32,5 @@ export async function editUser(user: Partial<User>): Promise<void> {
 export async function deleteUser(userId: number): Promise<void> {
   await query('DELETE FROM users WHERE user_id = ?', [userId]);
 }
+
+

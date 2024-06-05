@@ -8,6 +8,7 @@ interface UserContextType {
   userData: User | null;
   login: (user: User) => void;
   logout: () => void;
+  setUserData: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -27,7 +28,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <UserContext.Provider value={{ isLoggedIn, userData, login, logout }}>
+    <UserContext.Provider value={{ isLoggedIn, userData, login, logout, setUserData }}>
       {children}
     </UserContext.Provider>
   );

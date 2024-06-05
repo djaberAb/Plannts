@@ -1,7 +1,8 @@
+// pages/PlantDetail.tsx
 "use client";
 
 import { useCart } from '@/utils/cart_context';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import React from 'react';
 import Navbar from '@/components/navbar';
 import Image from 'next/image';
@@ -12,6 +13,7 @@ import { Plant } from '@/utils/interfaces';
 
 const PlantDetail: React.FC = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const plant_id = parseInt(searchParams.get('plant_id') || '0');
   const name = searchParams.get('name');
@@ -26,7 +28,7 @@ const PlantDetail: React.FC = () => {
 
   const { addToCart, toggleCart } = useCart();
 
-  const plant : Plant = {
+  const plant: Plant = {
     plant_id,
     name: name ?? '',
     description: description ?? '',
@@ -70,6 +72,7 @@ const PlantDetail: React.FC = () => {
               <Label className="text-lg">Stock: {stock}</Label>
             </div>
             <Button className="bg-green-500 hover:bg-green-800 text-white rounded" onClick={() => addToCart(plant)}>Ajouter au panier</Button>
+            <Button className="bg-green-500 hover:bg-green-800 text-white rounded" onClick={() => router.push(`/exchange?plant_id=${plant_id}&name=${name}&owner_id=${owner_id}`)}>Échange Plante</Button>
             <Button className="bg-green-500 hover:bg-green-800 text-white rounded" onClick={toggleCart}>Voir le panier</Button>
           </div>
         </div>

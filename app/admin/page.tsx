@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import SideNav from '@/components/sideNav_admin';
 import { fetchUsers, addUser, editUser, deleteUser } from '../api/users';
 import { User } from '@/utils/interfaces';
-import {UserModal} from '@/components/user_modal';
+import UserModal from '@/components/user_modal';
 
 const AdminUsers = () => {
   const { isLoggedIn, userData } = useUser();
