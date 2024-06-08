@@ -4,7 +4,7 @@ import Navbar from '@/components/navbar';
 import PlantCard from '@/components/plant_card';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { fetchPlants } from '../api/plants'; // Replace with your API call
+import { fetchPlants } from '../api/plants'; 
 import { Plant } from '@/utils/interfaces';
 import { CartProvider } from '@/utils/cart_context';
 

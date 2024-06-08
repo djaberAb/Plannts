@@ -24,4 +24,4 @@ export async function query(query: string, data: any[]) {
         connection.release();
       }
     }
-  }
+  } 

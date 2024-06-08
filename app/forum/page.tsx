@@ -56,10 +56,10 @@ const CommandesPage: React.FC = () => {
             placeholder="Type your message here..."
           ></textarea>
           <Button
-            className="w-full bg-blue-500 text-white rounded py-2"
+            className="w-full bg-green-500 hover:bg-green-800 text-white rounded py-2"
             onClick={() => handleSendMessage((document.getElementById('messageContent') as HTMLTextAreaElement).value)}
           >
-            Send
+            Envoyer
           </Button>
         </div>
       </div>

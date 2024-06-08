@@ -71,23 +71,23 @@ const AdminUsers = () => {
 
   return (
     <div className="flex">
-      <SideNav title={'Dashboard'} />
+      <SideNav title={'Tableau de bord'} />
       <div className="ml-60 pt-2 px-4 space-y-4 flex-grow">
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-bold">Users</h2>
+          <h2 className="text-xl font-bold">Utilisateurs</h2>
           <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={() => openModal()}>
-            Add User
+            Ajouter un utilisateur
           </button>
         </div>
         <div className="bg-white p-4 rounded shadow">
           <table className="w-full">
             <thead>
               <tr>
-                <th className="text-left">Username</th>
+                <th className="text-left">Nom d&apos;utilisateur</th>
                 <th className="text-left">Email</th>
-                <th className="text-left">First Name</th>
-                <th className="text-left">Last Name</th>
-                <th className="text-left">Role</th>
+                <th className="text-left">Prénom</th>
+                <th className="text-left">Nom de famille</th>
+                <th className="text-left">Rôle</th>
                 <th className="text-left">Actions</th>
               </tr>
             </thead>
@@ -101,10 +101,10 @@ const AdminUsers = () => {
                   <td>{user.role}</td>
                   <td>
                     <button className="bg-yellow-500 text-white px-2 py-1 rounded" onClick={() => openModal(user)}>
-                      Edit
+                      Modifier
                     </button>
                     <button className="bg-red-500 text-white px-2 py-1 rounded ml-2" onClick={() => handleDeleteUser(user.user_id)}>
-                      Delete
+                      Supprimer
                     </button>
                   </td>
                 </tr>
@@ -126,3 +126,5 @@ const AdminUsers = () => {
 };
 
 export default AdminUsers;
+
+
